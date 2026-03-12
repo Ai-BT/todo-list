@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { useTheme } from '../context/ThemeContext'
 
 export default function TodoItem({ todo, onToggle, onDelete, onUpdate }) {
   const [isEditing, setIsEditing] = useState(false)
   const [editTitle, setEditTitle] = useState(todo.title)
+  const { theme } = useTheme()
 
   const handleSave = () => {
     if (editTitle.trim()) {
@@ -25,10 +27,11 @@ export default function TodoItem({ todo, onToggle, onDelete, onUpdate }) {
       alignItems: 'center',
       gap: '12px',
       padding: '12px 16px',
-      background: '#fff',
+      background: theme.card,
       borderRadius: '8px',
       marginBottom: '8px',
-      boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+      boxShadow: theme.cardShadow,
+      transition: 'all 0.3s',
     }}>
       <input
         type="checkbox"
@@ -48,8 +51,10 @@ export default function TodoItem({ todo, onToggle, onDelete, onUpdate }) {
             flex: 1,
             padding: '4px 8px',
             fontSize: '16px',
-            border: '1px solid #ddd',
+            border: `1px solid ${theme.inputBorder}`,
             borderRadius: '4px',
+            background: theme.input,
+            color: theme.text,
           }}
         />
       ) : (
@@ -59,7 +64,7 @@ export default function TodoItem({ todo, onToggle, onDelete, onUpdate }) {
             flex: 1,
             fontSize: '16px',
             textDecoration: todo.completed ? 'line-through' : 'none',
-            color: todo.completed ? '#999' : '#333',
+            color: todo.completed ? theme.textMuted : theme.text,
             cursor: 'pointer',
           }}
         >
